@@ -1,9 +1,9 @@
 Config = {}
 
-Config.taxPercentage = 1 -- 1% Standardwert
+Config.taxPercentage = 1 -- 1% default value
 
-Config.taxInterval = 3600 -- Alle 10 Sekunden Standardwert (3600 = 1 Stunde)
+Config.taxInterval = 3600 -- Every 10 seconds default value (3600 = 1 hour)
 
-Config.taxNotification = 'Es wurden %s$ Steuern von Ihrem Konto abgezogen.'
+Config.taxNotification = '%s$ taxes have been deducted from your account。'
 
-Config.notificationType = 'esx' -- ('esx', 'chat')
+Config.notificationType = 'qbcore' -- ('qbcore', 'chat')

@@ -1,13 +1,13 @@
-ESX = nil
+local QBcore = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+TriggerEvent('qb-core:GetObject', function(obj) QBcore = obj end)
 
-RegisterNetEvent('showTaxNotification')
-AddEventHandler('showTaxNotification', function(taxAmount)
-    ESX.ShowNotification('Es wurden ' .. taxAmount .. '$ Steuern von Ihrem Konto abgezogen.')
+RegisterNetEvent('qbcore:client:ShowTaxNotification')
+AddEventHandler('qbcore:client:ShowTaxNotification', function(taxAmount)
+    QBcore.Functions.Notify('' .. taxAmount .. '$ taxes have been deducted from your account.')
 end)
 
-RegisterNetEvent('receiveConfigFromServer')
-AddEventHandler('receiveConfigFromServer', function(receivedConfig)
+RegisterNetEvent('qbcore:client:ReceiveConfigFromServer')
+AddEventHandler('qbcore:client:ReceiveConfigFromServer', function(receivedConfig)
     config = receivedConfig
 end)

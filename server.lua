@@ -1,42 +1,43 @@
-ESX = nil
+local QBcore = nil
 
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+TriggerEvent('qb-core:GetObject', function(obj) QBcore = obj end)
 
 local config = {}
 
 Citizen.CreateThread(function()
-    while ESX == nil do
+    while QBcore == nil do
         Citizen.Wait(10)
     end
-    TriggerEvent('esx:getConfig', function(cfg) config = cfg end)
+    TriggerEvent('qb-core:GetConfig', function(cfg) config = cfg end)
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() == resourceName) then
-        print("^5[Lazy_TAX]^7 System gestartet")
+        print("^5[Lazy_TAX]^7 System started")
     end
 end)
 
 local function applyTax()
-    for _, player in ipairs(GetPlayers()) do
-        local xPlayer = ESX.GetPlayerFromId(player)
-        local accountBalance = xPlayer.getAccount('bank').money
-        local taxPercentage = config.taxPercentage or 1 -- Standardmäßig 1%
+    for _, player in ipairs(QBcore.Functions.GetPlayers()) do
+        local xPlayer = QBcore.Functions.GetPlayer(player)
+        local accountBalance = xPlayer.PlayerData.money.bank
+        local taxPercentage = config.taxPercentage or 1 -- Default is 1%
         local taxAmount = accountBalance * (taxPercentage / 100)
-        xPlayer.removeAccountMoney('bank', taxAmount)
-        local notificationType = config.notificationType or 'esx'
-        if notificationType == 'esx' then
-            TriggerClientEvent('showTaxNotification', player, taxAmount) -- Auslösen der ESX-Benachrichtigung
+        xPlayer.Functions.RemoveMoney('bank', taxAmount)
+        local notificationType = config.notificationType or 'qbcore'
+        if notificationType == 'qbcore' then
+            TriggerClientEvent('qb-core:client:Notify', player, 'You have been charged tax: $' .. taxAmount) -- Triggering QBcore notification
         elseif notificationType == 'chat' then
-            TriggerClientEvent('chatMessage', player, '', {255, 0, 0}, string.format(config.taxNotification, taxAmount)) -- Auslösen der Chat-Benachrichtigung
+            TriggerClientEvent('chatMessage', player, '', {255, 0, 0}, string.format(config.taxNotification, taxAmount)) -- Triggering chat notification
         end
     end
 end
 
--- Timer für die Steueranwendung
+-- Timer for applying tax
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait((config.taxInterval or 10) * 3600000) -- Millisekunden
+        Citizen.Wait((config.taxInterval or 10) * 3600000) -- Milliseconds
         applyTax()
     end
 end)
+

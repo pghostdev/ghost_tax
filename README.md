@@ -1,8 +1,5 @@
-Welcome,
-Here you can find the free Lazy Tax
+-- SCRIPT EM TESTE --
 
-There is a bug (which we will fix soon) the time when the tax should be debited has to be changed via server.lua
-line: 39 in milliseconds 
-The current setting is one hour
+Sistema de TAXAS por X tempo e X de valor.
 
-The rest can be changed via Config
+Brevemente mais updates.
