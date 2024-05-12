@@ -1,22 +1,20 @@
 fx_version 'cerulean'
 games { 'gta5' }
 
-author 'Mike'
-description 'LAZY Tax'
+author 'Ghost DEV'
+description 'GHOST Tax'
 version '1.0.0'
 
-dependency 'es_extended'
+dependency 'qb-core'
 
 -- Server Scripts
 server_scripts {
-    '@es_extended/locale.lua',
     'config.lua',
     'server.lua',
 }
 
 -- Client Scripts
 client_scripts {
-    '@es_extended/locale.lua',
     'config.lua',
     'client.lua',
 }
